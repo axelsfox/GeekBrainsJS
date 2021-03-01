@@ -21,11 +21,27 @@ for (let i = 2; i <= n; i++) {
 a) Организовать такой массив для хранения товаров в корзине;
 b) Организовать функцию countBasketPrice, которая будет считать стоимость корзины.*/
 const cart = [
-    ['item1', 347, 1],
-    ['item2', 299, 1],
-    ['item3', 15, 5],
-    ['item4', 999, 2],
-]
+    ['item1', 347, 1], //347
+    ['item2', 299, 1], //299
+    ['item3', 15, 5], //75
+    ['item4', 999, 2], //1998
+];
+
+function countBasketPrice(uCart){
+    let itemSum = []; //массив промежуточных результатов цена*количество
+    for(let i = 0; i< cart.length; i++){//перебирает элементы и перемножает цену*кол
+    let newCost = cart[i][1]*cart[i][2]; 
+    itemSum.push(newCost);
+}
+var allSum = itemSum.reduce(function(sum, current){ //сумма результатов промежуточного массива, она же стоимость всех товаров корзины
+		return sum + current;
+	}, 0);
+    return allSum
+};
+countBasketPrice(cart);
+console.log("стоимость всех товаров в корзине " + countBasketPrice(cart));
+
+
 
 //3.*Вывести с помощью цикла for числа от 0 до 9, не используя тело цикла. Выглядеть это должно так: for(…){// здесь пусто}
 
@@ -38,12 +54,6 @@ xx
 xxx
 xxxx
 xxxxx*/
-var arr = [];
-        var end = 0;
-        while (end < 20){
-            end++;
-            arr.push('x');
-            console.log(arr);
-        }
+
 
 </script>
