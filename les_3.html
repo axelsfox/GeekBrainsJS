@@ -33,8 +33,8 @@ function countBasketPrice(uCart){
     let newCost = cart[i][1]*cart[i][2]; 
     itemSum.push(newCost);
 }
-var allSum = itemSum.reduce(function(sum, current){ //сумма результатов промежуточного массива, она же стоимость всех товаров корзины
-		return sum + current;
+    let allSum = itemSum.reduce(function(sum, current){ //сумма результатов промежуточного массива, она же стоимость всех товаров корзины
+	return sum + current;
 	}, 0);
     return allSum
 };
