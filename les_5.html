@@ -42,28 +42,28 @@
     let board = document.querySelector('.chessDesk');
     let flag = true;
     let rowName = document.createElement('tr');
-    board.appendChild(rowName);
+    board.appendChild(rowName); //добавляем строку с буквами
     let chessName = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
         for(let i = 0; i < 9; i++){
-            let block = document.createElement('td');
-            rowName.appendChild(block);
-            block.innerHTML = chessName[i];
-            block.className='numbers'
+            let block = document.createElement('td'); 
+            rowName.appendChild(block); //накидываем в нее ячеек
+            block.innerHTML = chessName[i]; //накидываем в ячейки букв из массива chessName
+            block.className='numbers' 
         };
             for (let r = 1; r < 9; r++){
                 let trChess = document.createElement('tr');
                 board.appendChild(trChess);
                 let block = document.createElement('td');
-                trChess.appendChild(block);
+                trChess.appendChild(block); //ячейка с цифрой для каждой строки
                 block.innerHTML = r;
                 block.className='numbers'
-                        for(let t = 0; t < 8; t++){
+                        for(let t = 0; t < 8; t++){ //ячейки основной таблицы
                             if(t==0)
-                            flag =!flag;
+                            flag =!flag; 
                             let block = document.createElement('td');
-                            flag ? block.className='blackItem': block.className='whiteItem';
+                            flag ? block.className='blackItem': block.className='whiteItem'; //проверка на цвет
                             trChess.appendChild(block);
-                            flag=!flag;
+                            flag=!flag; //сменая цвета
                         }
             }
 };
@@ -75,6 +75,19 @@ chess();
 //3.1. Пустая корзина должна выводить строку «Корзина пуста»;
 //3.2. Наполненная должна выводить «В корзине: n товаров на сумму m рублей».
 
+const cart = {
+    goods: [
+    {name: 'item1', price: 347, quantity: 1},
+    {name: 'item2', price: 299, quantity: 1},
+    {name: 'item3', price: 15, quantity: 5},
+    {name: 'item4', price: 999, quantity: 2}
+],
+    countBasketPrice(){
+        return this.goods.reduce((totalPrice, cartItem) => totalPrice + cartItem.price*cartItem.quantity, 0)
+        }
+};
+
+console.log(cart.countBasketPrice());
 
 
 
