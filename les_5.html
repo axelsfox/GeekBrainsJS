@@ -24,10 +24,21 @@
           font-weight: bold;
           border: 1px solid black;
        }
-      </style>
+       .productcart {
+        background-color: burlywood;
+        width: auto;
+        height: 100px; 
+        text-align: center;
+        font-size: 14px;
+        padding: 10px 10px;
+        border: black 2px solid;
+        margin: 10px 10px;
+    }
+    </style>
 </head>
 <body>
     <div class="chessDesk"></div>
+    <div class="cart"></div>
     <script type="text/javascript">
         'use strict';
         //1. Создать функцию, генерирующую шахматную доску. 
@@ -70,7 +81,6 @@
 chess(); 
 
 
-//2*. Заполнить созданную таблицу буквами, отвечающими за шахматную фигуру, например К – король, Ф – ферзь и т.п.,
 //3. Сделать генерацию корзины динамической: верстка корзины не должна находиться в HTML-структуре. Там должен быть только div, в который будет вставляться корзина, сгенерированная на базе JS:
 //3.1. Пустая корзина должна выводить строку «Корзина пуста»;
 //3.2. Наполненная должна выводить «В корзине: n товаров на сумму m рублей».
@@ -84,18 +94,33 @@ const cart = {
 ],
     countBasketPrice(){
         return this.goods.reduce((totalPrice, cartItem) => totalPrice + cartItem.price*cartItem.quantity, 0)
+    },
+    
+    goodsInCart(){
+        let block = document.querySelector('.cart');
+        if(this.goods.length > 0){
+            block.insertAdjacentHTML('beforeend', `<p>В корзине ${this.goods.length} товар(a), на сумму ${this.countBasketPrice()} рублей</p>`)
         }
+        else {
+         block.insertAdjacentHTML('beforeend', `<p>Корзина пуста</p>`)}    
+    },
+       
+    cartInit(){        
+        let itemCart = document.querySelector('.cart');
+        for(let i = 0; i < this.goods.length; i++){
+            itemCart.insertAdjacentHTML('beforeend', 
+            `<div class = "productcart">
+            <p><b>Наименование:</b> ${this.goods[i].name}</p>
+            <p><b>Цена:</b> ${this.goods[i].price}</p>
+            <p><b>Количество:</b> ${this.goods[i].quantity}</p>
+            </div>`);
+        };
+        this.goodsInCart()
+    }
 };
 
-console.log(cart.countBasketPrice());
-
-
-
-
-//4*. Сделать так, чтобы товары в каталоге выводились при помощи JS:
-//4.1. Создать массив товаров (сущность Product);
-//4.2. При загрузке страницы на базе данного массива генерировать вывод из него. HTML-код должен содержать только div id=”catalog” без вложенного кода. Весь вид каталога генерируется JS.*/
-    </script> 
+cart.cartInit();
+</script> 
 </body>
 </html>
 
