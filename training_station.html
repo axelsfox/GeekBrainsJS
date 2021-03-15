@@ -36,12 +36,12 @@ function chess(){
     let board = document.querySelector('.chessDesk');
     let flag = true;
     let rowName = document.createElement('tr');
-    board.appendChild(rowName);
+    board.appendChild(rowName); //добавляем строку с буквами
     let chessName = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
         for(let i = 0; i < 9; i++){
-            let block = document.createElement('td');
+            let block = document.createElement('td'); //накидываем в нее ячеек
             rowName.appendChild(block);
-            block.innerHTML = chessName[i];
+            block.innerHTML = chessName[i]; //накидываем в ячейки букв из массива chessName
             block.className='numbers'
         };
             for (let r = 1; r < 9; r++){
@@ -62,107 +62,7 @@ function chess(){
             }
 };
 chess();      
-/*function draw(){
-    var table = document.createElement('table');
-    var flag = true;
-    
-    var trr = document.createElement('tr');
-    var arr = [' ','a','b','c','d','e','f','g','h'];
-     //генерим ячейки
-    for(var i = 0; i<8; i++){
-        var tr = document.createElement('tr');
-        
-        //создаем ячейку для цифр
-        var tdd = document.createElement('td');
-        tdd.style.width='50px';
-        tdd.style.height='50px';
-        tdd.innerHTML=8-i;
-        tr.appendChild(tdd);
-        
-        for(var j=0; j<8; j++){
-            
-            if(j==0)
-                flag=!flag;
-            
-            var td = document.createElement('td');
-            
-            td.style.width='50px';
-            td.style.height='50px';
-            if(flag){
-                td.style.background='black';    
-            }else
-                td.style.background='white';    
-                
-            tr.appendChild(td);
-            flag=!flag;
-        }
-        table.appendChild(tr);
-    }
-    
-    //генерим буквы
-    for(var k = 0; k<9; k++){
-        
-        var td = document.createElement('td');
-        td.style.width='50px';
-        td.style.height='50px';
-        td.style.background='white';
-        td.innerHTML=arr[k];
-        
-        trr.appendChild(td);
-        
-    }
-    table.appendChild(trr);
-    
-    document.body.appendChild(table);
-}
- 
-draw();
 
-    /*function drawBoard(){
-    let board = document.querySelector('.chessDesk');
-    let block;
-    let flag = true; // белая-черная клетка
-    
-    for(let i=0; i<8; i++){
-        
-        for(let j=0; j<8; j++){
-            
-            if(j==0)
-                flag = !flag;   
-            
-            block = document.createElement('div');
-        
-            if(flag)
-                block.className='blackItem';
-            else
-                block.className='whiteItem';
-            
-            //вывел
-            board.appendChild(block);
-            
-            //поменял с черного на белое
-            flag = !flag;
-        }
-    }
-};
-
-drawBoard();*/
-        /*var chessWrap = document.querySelector('.ch-wrap');
-
-        var i = 0, count = 0;
-
-        while (count < 8 * 8) {
-        var item = document.createElement('div');
-            chessWrap.appendChild(item);
-
-            item.classList.add('ch-item');
-
-            if (i && i % 2)
-            item.classList.add('ch-black')
-
-            i += ((i + 2) % 9) ? 1 : 2;
-            count++;
-}*/
     </script> 
 </body>
 </html>

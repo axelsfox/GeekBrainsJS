@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .blackItem {
+            width: 50px;
+            height: 50px;
+            background-color: black;
+       }
+      .whiteItem {
+            width: 50px;
+            height: 50px;
+            background-color: burlywood;
+       }
+       .numbers {
+          width: 50px;
+          height: 50px; 
+          text-align: center;
+          font-size: 14;
+          font-weight: bold;
+          border: 1px solid black;
+       }
+      </style>
+</head>
+<body>
+    <div class="chessDesk"></div>
+    <script type="text/javascript">
+        'use strict';
+        //1. Создать функцию, генерирующую шахматную доску. 
+        //При этом можно использовать любые html-теги по своему желанию. 
+        //Доска должна быть разлинована соответствующим образом, т.е. чередовать черные и белые ячейки. 
+        //Строки должны нумероваться числами от 1 до 8, столбцы – латинскими буквами A, B, C, D, E, F, G, H.
+
+        //Не хочу подсматривать в уже имеющееся решение, но понимаю, что совсем не оптимально (хоть и работает) 
+        //Пока ничего более изящного в голову не приходит.
+
+        function chess(){
+    let board = document.querySelector('.chessDesk');
+    let flag = true;
+    let rowName = document.createElement('tr');
+    board.appendChild(rowName);
+    let chessName = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+        for(let i = 0; i < 9; i++){
+            let block = document.createElement('td');
+            rowName.appendChild(block);
+            block.innerHTML = chessName[i];
+            block.className='numbers'
+        };
+            for (let r = 1; r < 9; r++){
+                let trChess = document.createElement('tr');
+                board.appendChild(trChess);
+                let block = document.createElement('td');
+                trChess.appendChild(block);
+                block.innerHTML = r;
+                block.className='numbers'
+                        for(let t = 0; t < 8; t++){
+                            if(t==0)
+                            flag =!flag;
+                            let block = document.createElement('td');
+                            flag ? block.className='blackItem': block.className='whiteItem';
+                            trChess.appendChild(block);
+                            flag=!flag;
+                        }
+            }
+};
+chess(); 
+
+
+//2*. Заполнить созданную таблицу буквами, отвечающими за шахматную фигуру, например К – король, Ф – ферзь и т.п.,
+//3. Сделать генерацию корзины динамической: верстка корзины не должна находиться в HTML-структуре. Там должен быть только div, в который будет вставляться корзина, сгенерированная на базе JS:
+//3.1. Пустая корзина должна выводить строку «Корзина пуста»;
+//3.2. Наполненная должна выводить «В корзине: n товаров на сумму m рублей».
+
+const cart = {
+    goods: [
+    {name: 'item1', price: 347, quantity: 1},
+    {name: 'item2', price: 299, quantity: 1},
+    {name: 'item3', price: 15, quantity: 5},
+    {name: 'item4', price: 999, quantity: 2}
+],
+
+countBasketPrice(){
+    return this.goods.reduce((totalPrice, cartItem) => totalPrice + cartItem.price*cartItem.quantity, 0)
+}
+};
+
+console.log(cart.countBasketPrice());
+
+
+
+//4*. Сделать так, чтобы товары в каталоге выводились при помощи JS:
+//4.1. Создать массив товаров (сущность Product);
+//4.2. При загрузке страницы на базе данного массива генерировать вывод из него. HTML-код должен содержать только div id=”catalog” без вложенного кода. Весь вид каталога генерируется JS.*/
+    </script> 
+</body>
+</html>
+
+
+
+
