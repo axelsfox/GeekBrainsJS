@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .cart {
+            width: auto;
+            height: auto;
+            background-color: cadetblue;
+            border: 1px solid black;
+            margin: 30px 0px;
+            padding: 10px 10px;
+            text-align: left;
+        }
+        .catalog {
+            width: auto;
+            height: auto;
+            background-color: rgb(155, 250, 253);
+            border: 1px solid black;
+            text-align: center;
+            display: flex;
+        }
+        
+        .block_cart {
+            width: 30%;
+            height: auto; 
+            text-align: center;
+            font-size: 14px;
+            padding: 10px 10px;
+            border: black 2px solid;
+            margin: 10px 10px;
+    
+        }
+        .block_catalog {
+            width: 30%;
+            height: auto; 
+            padding: 10px 10px;
+            border: black 2px solid;
+            margin: 10px 10px;
+    
+        }
+        </style>
+</head>
+<body>
+    <p>Каталог товаров:</p>
+    <div class="catalog"></div>
+    <div class="cart"></div>
+
+    <script type="text/javascript">
+        'use strict';
+    //1. Доработать модуль корзины.
+    //a. Добавлять в объект корзины выбранные товары по клику на кнопке «Купить» без перезагрузки страницы
+    //b. Привязать к событию покупки товара пересчет корзины и обновление ее внешнего вида
+    
+const shop = {
+    catalog: [
+    {id_product: 111, name: 'item1', price: 347},
+    {id_product: 222, name: 'item2', price: 299},
+    {id_product: 333, name: 'item3', price: 15},
+    {id_product: 444, name: 'item4', price: 999},
+    {id_product: 555, name: 'item5', price: 3999}
+],
+    cart: [],
+    //все еще считает сумму
+    countBasketPrice(){
+        return this.cart.reduce((totalPrice, cartItem) => totalPrice + cartItem.price*cartItem.quantity, 0)
+    },
+    //поиск id честно сворован с примера в уроке, вместе с инфой про data-id С гугла
+    findProductInCatalog(id_product) {
+        return this.catalog.find(product => product.id_product === id_product);
+    },
+    
+    addToCart(id_product){
+        const product = this.findProductInCatalog(id_product);
+        if (product) {
+            const findInBasket = this.cart.find(({id_product}) => product.id_product === id_product);
+            if (findInBasket) {
+                findInBasket.quantity++;
+            } else {
+                this.cart.push({...product, quantity: 1});
+            }
+            this.cartRender();
+        } else {
+            alert('Ошибка добавления!');
+        }
+    },
+    
+    //рисует корзину
+    cartRender(){
+        let block = document.querySelector('.cart');
+        if(this.cart.length > 0){
+            block.insertAdjacentHTML('beforeend', `<p>В корзине ${this.cart.length} товар(a), на сумму ${this.countBasketPrice()} рублей</p>`)
+        for(let i = 0; i < this.cart.length; i++){
+            block.insertAdjacentHTML('beforeend', 
+            `<div class = "block_cart">
+            <p><b>Наименование:</b> ${this.cart[i].name}</p>
+            <p><b>Цена:</b> ${this.cart[i].price}</p>
+            <p><b>Количество:</b> ${this.cart[i].quantity}</p>
+            </div>`);
+        };
+        }
+        else {
+         block.insertAdjacentHTML('beforeend', `<p>Корзина пуста</p>`)
+        };
+               
+    },
+    //рисует каталог
+    catalogRender(){
+        let block = document.querySelector('.catalog');
+        for(let i = 0; i < this.catalog.length; i++){
+            block.insertAdjacentHTML('beforeend', 
+            `<div class = "block_catalog">
+            <p><b>Наименование:</b> ${this.catalog[i].name}</p>
+            <p><b>Цена:</b> ${this.catalog[i].price}</p>
+            <button class="product__add" data-id="${this.catalog[i].id_product}">Купить</button>
+            </div>`);
+        };
+                           
+}, 
+    //запускает все подряд
+    initShop(){
+        this.catalogRender();
+        this.cartRender();
+    }
+};
+shop.initShop();
+
+ </script> 
+</body>
+</html>
