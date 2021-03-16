@@ -57,19 +57,23 @@
     //b. Привязать к событию покупки товара пересчет корзины и обновление ее внешнего вида
     
 const shop = {
-    catalog: [
-    {id_product: 111, name: 'item1', price: 347},
-    {id_product: 222, name: 'item2', price: 299},
-    {id_product: 333, name: 'item3', price: 15},
-    {id_product: 444, name: 'item4', price: 999},
-    {id_product: 555, name: 'item5', price: 3999}
-],
-    cart: [],
+        catalog: [
+            {id_product: 111, name: 'item1', price: 347},
+            {id_product: 222, name: 'item2', price: 299},
+            {id_product: 333, name: 'item3', price: 15},
+            {id_product: 444, name: 'item4', price: 999},
+            {id_product: 555, name: 'item5', price: 3999}
+        ],
+
+        cart: [],
+
     //все еще считает сумму
+
     countBasketPrice(){
         return this.cart.reduce((totalPrice, cartItem) => totalPrice + cartItem.price*cartItem.quantity, 0)
     },
     //поиск id честно сворован с примера в уроке, вместе с инфой про data-id С гугла
+
     findProductInCatalog(id_product) {
         return this.catalog.find(product => product.id_product === id_product);
     },
@@ -88,12 +92,29 @@ const shop = {
             alert('Ошибка добавления!');
         }
     },
-    
+
+    addEventHandlers() {
+        this.catalogBlock.addEventListener('click', event => this.addToBasket(event));
+    },
+
+    addToBasket(event) {
+        if (!event.target.classList.contains('product__add')) return;
+        const id_product = +event.target.dataset.id;
+        this.addToCart(id_product);
+    },
+
+   
     //рисует корзину
+
     cartRender(){
         let block = document.querySelector('.cart');
+        block.innerHTML = '';
         if(this.cart.length > 0){
-            block.insertAdjacentHTML('beforeend', `<p>В корзине ${this.cart.length} товар(a), на сумму ${this.countBasketPrice()} рублей</p>`)
+             block.insertAdjacentHTML('beforeend', 
+            `<p>В корзине ${this.cart.length} товар(ов), на сумму ${this.countBasketPrice()} рублей</p>
+            <button id = "clear">Очистить корзину</button>`)
+            let clearButtons = document.getElementById("clear");
+            clearButtons.addEventListener('click', this.clearCart); 
         for(let i = 0; i < this.cart.length; i++){
             block.insertAdjacentHTML('beforeend', 
             `<div class = "block_cart">
@@ -101,14 +122,15 @@ const shop = {
             <p><b>Цена:</b> ${this.cart[i].price}</p>
             <p><b>Количество:</b> ${this.cart[i].quantity}</p>
             </div>`);
-        };
-        }
+            };
+            }
         else {
-         block.insertAdjacentHTML('beforeend', `<p>Корзина пуста</p>`)
-        };
-               
+        block.insertAdjacentHTML('beforeend', `<p>Корзина пуста</p>`)
+            };
     },
+    
     //рисует каталог
+    
     catalogRender(){
         let block = document.querySelector('.catalog');
         for(let i = 0; i < this.catalog.length; i++){
@@ -118,16 +140,28 @@ const shop = {
             <p><b>Цена:</b> ${this.catalog[i].price}</p>
             <button class="product__add" data-id="${this.catalog[i].id_product}">Купить</button>
             </div>`);
-        };
-                           
-}, 
+            let allButtons = document.getElementsByTagName("button");
+            allButtons[i].addEventListener('click', event => this.addToBasket(event));
+           }
+    }, 
+
+    //Очистка корзины
+
+    clearCart(){
+        shop.cart = [];
+        shop.cartRender();
+    },
+
     //запускает все подряд
-    initShop(){
+
+    startShop(){
         this.catalogRender();
         this.cartRender();
     }
 };
-shop.initShop();
+
+shop.startShop();
+
 
  </script> 
 </body>
